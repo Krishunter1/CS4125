@@ -8,5 +8,7 @@ public class DatabaseControl {
 		public DatabaseControl( String in_filePath ){
 			conn = new Connection( in_filePath );
 		}
-		
+		public ArrayList<String> getData(){
+			return conn.getData();
+		}
 }

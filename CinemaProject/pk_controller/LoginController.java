@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import pk_database.DatabaseControl;
 public class LoginController{
 	
 	private boolean loginSuccess;
@@ -11,14 +13,14 @@ public class LoginController{
 	
 	public boolean checkLogin(){
 		boolean success = false;
-		DatabaseControl dc = new DatabaseControl("Users.txt");
-		ArrayList<String> tempResults = dc.getData();
+		DatabaseControl dc = new DatabaseControl();
+		ArrayList<String> tempResults = dc.getUsers();
 		
 		for( String temp : tempResults ){
-			String tempArr = temp.split(",");
+			String tempArr [] = temp.split(",");
 			
 			if(loginUsername.matches(tempArr[0]) && loginPassword.matches(tempArr[1]))
-				success = truel;
+				success = true;
 		}
 		return success;
 	}

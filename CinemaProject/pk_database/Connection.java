@@ -11,7 +11,7 @@ public class Connection {
 	
 	public Connection( String in_filePath ){	
 		filePath = new File(in_filePath);
-		loadFile();
+		//loadFile();
 	}
 	
 	private void loadFile(){

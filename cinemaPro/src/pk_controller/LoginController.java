@@ -6,24 +6,24 @@ public class LoginController{
 	private boolean loginSuccess;
 	private String  loginUsername;
 	private String  loginPassword;
+	private UIController ui;
 	
-	LoginController( String in_Username , String in_Password ){
+	public LoginController( String in_Username , String in_Password ){
 		this.loginUsername = in_Username;
 		this.loginPassword = in_Password;
 	}
 	
-	public boolean checkLogin(){
-		boolean success = false;
+	public void checkLogin(){
 		DatabaseControl dc = new DatabaseControl();
 		ArrayList<String> tempResults = dc.getUsers();
-		
+		System.out.println(tempResults);
 		for( String temp : tempResults ){
 			String tempArr [] = temp.split(",");
-			
+
 			if(loginUsername.matches(tempArr[0]) && loginPassword.matches(tempArr[1]))
-				success = true;
+				ui = new UIController();
+				ui.displayUserMenu();
 		}
-		return success;
 	}
 	
 }

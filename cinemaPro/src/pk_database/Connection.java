@@ -6,12 +6,12 @@ import java.util.ArrayList;
 
 public class Connection {
 	
-	private ArrayList<String> results;
+	private ArrayList<String> results  = new ArrayList<>();
 	private File filePath;
 	
 	public Connection( String in_filePath ){	
 		filePath = new File(in_filePath);
-		//loadFile();
+		loadFile();
 	}
 	
 	private void loadFile(){
@@ -27,7 +27,6 @@ public class Connection {
 			String line = "";
 			
 			while( ( line = bfr.readLine()) != null ){
-				if( line == null) break;
 				results.add(line);
 			}
 			

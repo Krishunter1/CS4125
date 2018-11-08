@@ -1,16 +1,16 @@
 package pk_controller;
 import pk_database.DatabaseControl;
+import pk_userUI.LoginMenu;
 import java.util.*;
+import pk_userUI.UserMenu;
 public class UIController {
 	
-	public DatabaseControl dbc;
-
-	
-	public UIController(){
-		dbc = new DatabaseControl();
+	public void displayLogin() {
+		LoginMenu menu = new LoginMenu();
 	}
-	public ArrayList<String> getUsers(){
-		return dbc.getUsers();
+	
+	public void displayUserMenu() {
+		UserMenu display = new UserMenu();
 	}
 	
 }

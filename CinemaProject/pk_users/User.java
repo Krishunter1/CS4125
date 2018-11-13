@@ -6,6 +6,7 @@ public abstract class User {
 	private String username;
 	private String password;
 	
+	User(){}
 	User( int in_UserID , String in_username , String in_password ){	
 		userID = in_UserID;
 		username = in_username;

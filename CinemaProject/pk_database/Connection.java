@@ -11,7 +11,8 @@ public class Connection {
 	
 	public Connection( String in_filePath ){	
 		filePath = new File(in_filePath);
-		//loadFile();
+		results = new ArrayList<String>();
+		loadFile();
 	}
 	
 	private void loadFile(){
@@ -28,6 +29,7 @@ public class Connection {
 			
 			while( ( line = bfr.readLine()) != null ){
 				if( line == null) break;
+				//System.out.print(line);
 				results.add(line);
 			}
 			
@@ -49,6 +51,9 @@ public class Connection {
 	}
 	public void addInfo( String in_info ){
 		results.add(in_info);
+	}
+	public void update( ArrayList<Object> updatedData){
+		
 	}
 	public void updateFile(){
 		FileWriter fw;

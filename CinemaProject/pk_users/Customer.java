@@ -1,12 +1,14 @@
+package pk_users;
 import java.util.ArrayList;
 import pk_refunds.Refund;
 import pk_bookings.Booking;
-public class Customer implements User {
+public class Customer extends User {
 	
 	private ArrayList<Refund> refundRequests;
 	private ArrayList<Booking> userBookings;
-
-	Customer( int in_UserID , String in_username , String in_password ){
+	
+	public Customer(){}
+	public Customer( int in_UserID , String in_username , String in_password ){
 		super(in_UserID,in_username,in_password);
 		refundRequests = new ArrayList<Refund>();
 		userBookings = new ArrayList<Booking>();

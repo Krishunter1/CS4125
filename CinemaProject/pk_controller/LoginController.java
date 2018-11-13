@@ -1,28 +1,33 @@
+package pk_controller;
 import java.util.ArrayList;
 import pk_database.DatabaseControl;
+import pk_factory.Factory;
+import pk_users.Customer;
+import pk_users.Manager;
+import pk_users.User;
 public class LoginController{
 	
-	private boolean loginSuccess;
-	private String  loginUsername;
-	private String  loginPassword;
+	private User currentUser;
 	
-	LoginController( String in_Username , String in_Password ){
-		this.loginUsername = in_Username;
-		this.loginPassword = in_Password;
-	}
+	public LoginController(){}
 	
-	public boolean checkLogin(){
+	public boolean checkLogin( String in_Username , String in_Password ){
 		boolean success = false;
+	
 		DatabaseControl dc = new DatabaseControl();
-		ArrayList<String> tempResults = dc.getUsers();
-		
-		for( String temp : tempResults ){
-			String tempArr [] = temp.split(",");
-			
-			if(loginUsername.matches(tempArr[0]) && loginPassword.matches(tempArr[1]))
+		ArrayList<User> tempUsers = new ArrayList<User>();
+		tempUsers = dc.getUsers();
+		Factory uf = new Factory();
+		for( User temp : tempUsers ){
+			if( temp.getUsername().matches(in_Username) || temp.getPassword().matches(in_Password)){
+				currentUser = temp;
 				success = true;
+			}
+	
 		}
 		return success;
 	}
-	
+	public User getUser(){
+		return currentUser;
+	}
 }

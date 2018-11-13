@@ -20,4 +20,8 @@ public class Booking {
 		aMovie = in_Movie;
 		aUser  = in_User;
 	}
+	
+	public String getInfo(){
+		return "This is some information\n this is more info\n this is the last bit of info";
+	}
 }

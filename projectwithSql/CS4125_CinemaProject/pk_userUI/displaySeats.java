@@ -11,7 +11,7 @@ public class displaySeats extends Frame {
     JButton[] buttons;
     String[] seats;
     JButton confirmSeat;
-    
+    int count = 0;
     public displaySeats(String[] seats, UIController object){
     	ui = object;
     	this.seats = seats;
@@ -38,6 +38,7 @@ public class displaySeats extends Frame {
         
         add(panel);
         confirmSeat = new JButton("Confirm Seats");
+        confirmSeat.addActionListener(this);
         confirmSeat.setAlignmentX(Component.CENTER_ALIGNMENT);
         JLabel screen = new JLabel("----------screen this way-----------");
         screen.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -52,6 +53,25 @@ public class displaySeats extends Frame {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    	JButton button = (JButton) e.getSource();
-    	button.setEnabled(false);    }
+    	Object source = e.getSource();
+    	for(int i = 0; i < 10; i++ ) {
+    		if(source == buttons[i]) {
+    			if(buttons[i].isEnabled()) {
+    		    	buttons[i].setEnabled(false);   
+    		    	seats[i] = "1";
+    		    	count++;
+    			}
+    		}
+    	}
+    	if(source == confirmSeat) {
+    		if(count == 0) {
+    			JOptionPane.showMessageDialog(this, "No seat has been selected", "select seats", JOptionPane.ERROR_MESSAGE);
+    		}else {
+    			ui.setSeats(seats,count);
+    			dispose();
+    			PaymentMenu payment = new PaymentMenu(ui);
+    		}
+    	}
+ 
+    }
 }

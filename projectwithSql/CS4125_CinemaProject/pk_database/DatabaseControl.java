@@ -22,6 +22,7 @@ public class DatabaseControl {
 	private ResultSet resultSet;
 	private PreparedStatement preparedStatement;
 	private Factory uf;
+	private int seatId;
 	
 	public DatabaseControl(){
 		try {
@@ -119,11 +120,12 @@ public class DatabaseControl {
 	public String getSeats(int listId) {
 		String seats = "";
 		try {
-			preparedStatement = connect.prepareStatement("Select seat from seats where listingId = ?");
+			preparedStatement = connect.prepareStatement("Select seatsId, seat from seats where listingId = ?");
 			preparedStatement.setInt(1, listId);
 			resultSet = preparedStatement.executeQuery();
 			while(resultSet.next()) {
-			seats = resultSet.getString(1);
+			seatId = resultSet.getInt(1);
+			seats = resultSet.getString(2);
 			}
 			preparedStatement.close();
 			resultSet.close();
@@ -133,6 +135,36 @@ public class DatabaseControl {
 			e.printStackTrace();
 		}
 		return seats;
+	}
+	
+	public void setSeats(String seat) {
+		try {
+			System.out.print(seat);
+			preparedStatement = connect.prepareStatement("UPDATE seats SET seat = ? WHERE seatsId = ?");
+			preparedStatement.setString(1, seat);
+			preparedStatement.setInt(2, seatId);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void addBooking(int userId, int listingId, int seatNo , String paymentTyp ) {
+		try {
+			System.out.print(userId);
+			preparedStatement = connect.prepareStatement("insert into bookings values (default, ?, ?,?,?, default)");
+			preparedStatement.setInt(1, userId);
+			preparedStatement.setInt(2, listingId);
+			preparedStatement.setInt(3, seatNo);
+			preparedStatement.setString(4, paymentTyp);
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }

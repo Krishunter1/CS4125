@@ -12,7 +12,7 @@ import pk_users.User;
 public class UIController {
 	
 	private Menu newMenu;
-	private int userId;
+	private static int userId;
 	private String[] seats;
 	
 	public void displayLogin() {
@@ -55,5 +55,13 @@ public class UIController {
 	public String[] getSeats(String time) {
 		seats = newMenu.getSeats(time);
 		return seats;
+	}
+	
+	public void setSeats(String[] array, int numberOfSeats) {
+		newMenu.setSeats(array, numberOfSeats);
+	}
+	
+	public void addBooking(String paymentType) {
+		newMenu.addBooking(paymentType,userId);
 	}
 }

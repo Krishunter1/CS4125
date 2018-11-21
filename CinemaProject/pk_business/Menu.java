@@ -16,6 +16,8 @@ public class Menu {
     private Date selectedDate;
     private int movieId;
     private int listId;
+    private int numberOfSeats;
+    private String[] array;
     
 	public String[] getMovieNames() {
 		String[] names;
@@ -74,10 +76,26 @@ public class Menu {
 		for(MovieListing mov : listings) {
 			if(((mov.getDate()).getTime() == selectedDate.getTime()) && (mov.getMovieId() == movieId) && (mov.getTime() == selectedTime) ) {
 				seats = du.getSeats(mov.getListId());
-				System.out.print(seats);
+				listId = mov.getListId();
 				seatsArray = seats.split("-");
 			}
 		}
 		return seatsArray;
+	}
+	
+	public void setSeats(String[] array, int numberOfSeats) {
+		this.numberOfSeats = numberOfSeats;
+		this.array = array;
+	}
+	
+	public void addBooking(String paymentType, int userId) {
+		Booking newBook = new Booking(userId,listId,numberOfSeats, paymentType);
+		newBook.updateDatabase();
+		String seats = "";
+		for(int i = 0; i < array.length - 1; i++) {
+			seats += array[i] + "-";
+		}
+		seats += array[array.length-1];
+		du.setSeats(seats);
 	}
 }

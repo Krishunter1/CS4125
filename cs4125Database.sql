@@ -1,13 +1,20 @@
+DROP TABLE IF EXISTS bookings;
+DROP TABLE IF EXISTS seats;
+DROP TABLE IF EXISTS movieListings;
+DROP TABLE IF EXISTS bookings;
 DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Movies;
+
 
 create table Users(
 userId int(11) NOT NULL AUTO_INCREMENT,
 username varchar(15) not null,
 password varchar(15) not null,
+typeOfUser char(1) not null,
 primary key(userId)
 );
 
-INSERT INTO Users values(default, 'username', 'password');
+INSERT INTO Users values(default, 'username', 'password', '1');
 
 CREATE TABLE Movies(
 	movieId int(11) NOT NULL AUTO_INCREMENT,
@@ -35,7 +42,19 @@ create table seats(
      listingId int(11) NOT NULL,
      seat char(19) NOT NULL,
      PRIMARY KEY(seatsId),
-     FOREIGN KEY(listingId) REFERENCES movielistings(listId)
+     FOREIGN KEY(listingId) REFERENCES movielistings(listId) ON DELETE CASCADE
 );
 	 
 insert into seats values(default, 1, '0-0-0-0-0-0-0-0-0-0');
+
+create table bookings(
+	bookingId int(11) NOT NULL AUTO_INCREMENT,
+	userId int(11) NOT NULL,
+	listingId int(11) NOT NULL,
+	seatNo int(11) NOT NULL,
+	paymentTyp varchar(11) NOT NULL,
+	refundRq tinyint(1) DEFAULT 0,
+	PRIMARY KEY(bookingId),
+	FOREIGN KEY(userId) REFERENCES Users(userId),
+	FOREIGN KEY(listingId) REFERENCES movielistings(listId) ON DELETE CASCADE
+);

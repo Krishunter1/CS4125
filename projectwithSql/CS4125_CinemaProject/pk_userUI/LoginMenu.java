@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 
 public class LoginMenu extends JFrame implements ActionListener {
     private JTextField username = new JTextField();
-    private JTextField password = new JTextField();
+    private JTextField password = new JPasswordField();
     private JButton loginButton = new JButton("Login");
     private JButton createUser = new JButton("Create User");
 

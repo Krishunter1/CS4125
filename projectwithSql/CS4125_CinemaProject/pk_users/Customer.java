@@ -1,7 +1,7 @@
 package pk_users;
 import java.util.ArrayList;
 import pk_refunds.Refund;
-import pk_bookings.Booking;
+import pk_business.Booking;
 public class Customer extends User {
 	
 	private ArrayList<Refund> refundRequests;

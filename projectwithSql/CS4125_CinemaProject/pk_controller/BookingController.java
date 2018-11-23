@@ -7,9 +7,7 @@ public class BookingController {
 	
 		private DatabaseControl dbc;
 		
-		public int[] getMovies(){
-			
-		}
+		//public int[] getMovies(){}
 		public String showBooking(){
 			return "";
 		}

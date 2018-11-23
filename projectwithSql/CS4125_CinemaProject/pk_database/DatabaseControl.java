@@ -2,6 +2,9 @@ package pk_database;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import pk_business.Booking;
+
 import java.sql.PreparedStatement;
 
 import pk_factory.Factory;
@@ -35,7 +38,7 @@ public class DatabaseControl {
 	public void loadDatabase() throws Exception {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			connect = DriverManager.getConnection("jdbc:mysql://localhost/project","puser","pass");
+			connect = DriverManager.getConnection("jdbc:mysql://localhost:4444/project","puser","pass");
 			statement = connect.createStatement();
 			}catch(Exception e) {
 				throw e;
@@ -48,10 +51,10 @@ public class DatabaseControl {
 		try {
 			resultSet = statement.executeQuery("select * from users");
 			while(resultSet.next()) {
-				if(resultSet.getString(4) == "1") {
+				if(resultSet.getInt(4) == 1) {
 				users.add(uf.instanceCustomer(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3)));
 				}
-				else {
+				else if(resultSet.getInt(4) == 2)  {
 					users.add(uf.instanceManager(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3)));
 				}
 			}
@@ -165,6 +168,43 @@ public class DatabaseControl {
 			e.printStackTrace();
 		}
 		
+	}
+	public ArrayList<Booking> getRefundRequests(){
+		ArrayList<Booking> refundsRequested = new ArrayList<>();
+		try {
+			preparedStatement = connect.prepareStatement("select * from bookings where refundRq = 1;");
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+			Booking tempBooking = new Booking(resultSet.getInt(1),resultSet.getInt(2),resultSet.getInt(3),resultSet.getInt(4),resultSet.getString(5));
+			tempBooking.setRequested();
+			refundsRequested.add(tempBooking);
+			}
+			preparedStatement.close();
+			resultSet.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return refundsRequested;
+	}
+	public ArrayList<Booking> getCurrentUserBookings(int userId){
+		ArrayList<Booking> bookings = new ArrayList<>();
+		try{
+			preparedStatement = connect.prepareStatement("select * from bookings where userId = ?;");
+			preparedStatement.setInt(1, userId);
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+			Booking tempBooking = new Booking(resultSet.getInt(0),resultSet.getInt(1),resultSet.getInt(2),resultSet.getInt(3),resultSet.getString(4));
+			
+			}
+			preparedStatement.close();
+			resultSet.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return bookings;
 	}
 
 }

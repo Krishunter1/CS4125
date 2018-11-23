@@ -1,16 +1,21 @@
 package pk_userUI;
 
 import javax.swing.*;
+
+import pk_controller.UIController;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.Date;
 
 
 public class UserMenu extends Frame {
 
     private JButton createNewBooking = new JButton("create New Booking");
     private JButton reqRefund = new JButton("Request Refund");
-
-    public UserMenu(){
+    private JComboBox bookings;
+    public UserMenu(UIController object){
+    	ui = object;
         displayFrame();
     }
     @Override
@@ -21,6 +26,7 @@ public class UserMenu extends Frame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         createNewBooking.addActionListener(this);
         reqRefund.addActionListener(this);
+        bookings = new JComboBox();
         createNewBooking.setAlignmentX(Component.CENTER_ALIGNMENT);
         createNewBooking.setAlignmentY(Component.CENTER_ALIGNMENT);
         reqRefund.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -41,6 +47,9 @@ public class UserMenu extends Frame {
 
         if(buttonPressed == createNewBooking){
            displayMovies movies = new displayMovies();
+        }
+        if(buttonPressed == reqRefund){
+        	
         }
     }
 }

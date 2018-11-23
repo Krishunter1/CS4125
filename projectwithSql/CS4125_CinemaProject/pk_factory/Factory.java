@@ -10,12 +10,12 @@ public class Factory {
 	public Factory(){
 		
 	}
-	public User instanceManager(int s1 , String s2 , String s3){
-		instance = new Manager( s1 ,  s2 ,  s3);
+	public User instanceManager(int _id , String _username , String _password){
+		instance = new Manager( _id ,  _username ,  _password);
 		return instance;
 	}
-	public User instanceCustomer(int s1 , String s2 , String s3){
-		instance = new Customer( s1 ,  s2 ,  s3);
+	public User instanceCustomer(int _id , String _username , String _password){
+		instance = new Customer( _id ,  _username ,  _password);
 		return instance;
 	}
 	

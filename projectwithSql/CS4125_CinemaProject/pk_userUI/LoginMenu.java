@@ -41,8 +41,11 @@ public class LoginMenu extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object buttonPressed = e.getSource();
         if(buttonPressed == loginButton){
+
                 UIController ui = new UIController();
+
                 ui.checkLogin(username.getText(), password.getText());
+
                 dispose();
         }
         else {

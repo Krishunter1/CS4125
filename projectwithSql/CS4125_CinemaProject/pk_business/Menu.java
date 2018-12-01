@@ -42,7 +42,20 @@ public class Menu {
 		}
 		return genre;
 	}
+	public String getSelectedDate(){
+		return selectedDate.toString();
+	}
 	
+	public ArrayList<Booking> getBookings (int id){
+		ArrayList<Booking> temp = new ArrayList<>();
+		ArrayList<Booking> b = du.getAllBookings();
+		
+		for( Booking book : b){
+			if(book.getID() == id)
+				temp.add(book);
+		}
+		return temp;
+	}
 	public Date[] getDates(String name) {
 		du = new DatabaseControl();
 		listings = du.getDates(name);
@@ -72,7 +85,7 @@ public class Menu {
 		selectedTime = time;
 		String seats;
 		String[] seatsArray = null;
-		System.out.print("code is here 1" + selectedDate.getTime() + " " + movieId + selectedTime);
+		System.out.print("code is here 1 " + selectedDate.getTime() + " " + movieId + selectedTime);
 		for(MovieListing mov : listings) {
 			if(((mov.getDate()).getTime() == selectedDate.getTime()) && (mov.getMovieId() == movieId) && (mov.getTime() == selectedTime) ) {
 				seats = du.getSeats(mov.getListId());

@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import pk_factory.Factory;
 import pk_movies.Movie;
 import pk_movies.MovieListing;
+import pk_refunds.Refund;
 import pk_users.User;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -139,7 +140,20 @@ public class DatabaseControl {
 		}
 		return seats;
 	}
-	
+	public void updateBooking ( Booking b){
+		try{
+
+			preparedStatement = connect.prepareStatement(" Update Bookings set refundRq = ? where bookingId = ?;");
+			preparedStatement.setInt(1, b.getState());
+			preparedStatement.setInt(2,b.getID());
+			preparedStatement.execute();
+			
+			
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public void setSeats(String seat) {
 		try {
 			System.out.print(seat);
@@ -188,6 +202,29 @@ public class DatabaseControl {
 		}
 		return refundsRequested;
 	}
+	public ArrayList<Booking> getAllBookings(){
+		
+		ArrayList<Booking> result = new ArrayList<Booking>();
+		
+		
+		try{
+			preparedStatement = connect.prepareStatement("select * from bookings");
+			resultSet = preparedStatement.executeQuery();
+			while( resultSet.next()){
+				Booking b = new Booking ( resultSet.getInt(1) ,resultSet.getInt(2) ,resultSet.getInt(3),resultSet.getInt(4), resultSet.getString(5));
+				//if(resultSet.getInt(6) == 1)
+					b.setRequested();
+				result.add(b);
+			}
+			
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return result;
+	}
 	public ArrayList<Booking> getCurrentUserBookings(int userId){
 		ArrayList<Booking> bookings = new ArrayList<>();
 		try{
@@ -205,6 +242,26 @@ public class DatabaseControl {
 			e.printStackTrace();
 		}
 		return bookings;
+	}
+	public ArrayList<String> getRequestedRefunds(){
+		ArrayList<String> result = new ArrayList<>();
+		
+		try{
+			preparedStatement = connect.prepareStatement(" select bookingID , username , movieName from bookings,users,movielistings,movies where bookings.userId = users.userId && bookings.listingId = movielistings.listId && refundRq = 1;");
+			resultSet = preparedStatement.executeQuery();
+			if(resultSet!=null){
+				while(resultSet.next()){
+					result.add( resultSet.getString(1) + "," + resultSet.getString(2) + "," + resultSet.getString(3) + "," + "Requested");
+				}}
+		
+		preparedStatement.close();
+		resultSet.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+		
 	}
 
 }

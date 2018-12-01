@@ -24,18 +24,23 @@ public class Login{
 			e.printStackTrace();
 		}
 		ArrayList<User> tempUsers = new ArrayList<User>();
+		
 		tempUsers = dc.getUsers();
 		for( User temp : tempUsers ){
 			if( temp.getUsername().matches(in_Username) && temp.getPassword().matches(in_Password)){
-				currentUser = temp;
-				success = true;
+					currentUser = temp;
+					System.out.print(temp.getClass());
+					success = true;
 			}
-	
+			
 		}
-		if(success && (currentUser instanceof User)) {
+		//System.out.print(temp.getClass());
+		if(success && (currentUser instanceof Customer)) {
 			return 1;
-		}else {
+		}else if (success && (currentUser instanceof Manager)){
 			return 2;
+		}else{
+			return 0;
 		}
 	}
 	

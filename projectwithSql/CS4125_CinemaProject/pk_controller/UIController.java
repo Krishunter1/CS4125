@@ -35,17 +35,23 @@ public class UIController {
 		
 		int openMenu = login.checkLogin(username, password);
 		System.out.print("I got this far");
-		userId = login.getUser();
+		
 		if(openMenu == 1) {
+			userId = login.getUser();
 			displayUserMenu(userId);
 		}
 		else if (openMenu == 2){
+			userId = login.getUser();
 			displayManagerMenu(userId);
 		}else {
 			displayLogin();
 		}
 	}
-	public ArrayList<Booking> getRequestedRefunds(){
+	public void approveBooking ( int bookingID ){
+		ManagerBL m = new ManagerBL();
+		m.ApproveBooking(bookingID);
+	}
+	public ArrayList<String> getRequestedRefunds(){
 		ManagerBL m = new ManagerBL();
 		return m.getRequestedRefunds();
 	}
@@ -72,6 +78,18 @@ public class UIController {
 	
 	public void setSeats(String[] array, int numberOfSeats) {
 		newMenu.setSeats(array, numberOfSeats);
+	}
+	
+	public ArrayList<String> getUserBookings(){
+		ArrayList<String> res = new ArrayList<>();
+		ArrayList<Booking> b;
+		b = newMenu.getBookings(userId);
+		
+		for( Booking temp : b ){
+			res.add(temp.getID() + "," + temp.getMovie());
+		}
+		return res;
+		 
 	}
 	
 	public void addBooking(String paymentType) {
